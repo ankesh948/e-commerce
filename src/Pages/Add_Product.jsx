@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
+import Header from '../Components/Header';
+import Sidebar from '../Components/Sidebar';
 
-
-function Login() {
+function App_Product() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -62,6 +63,10 @@ function Login() {
 
   return (
     <>
+     <Header />
+    <div className="d-flex">
+        <Sidebar/>
+        <div className="main">
     <div className='container'>
       <div className='row'>
         <div className='col-5 card p-3 mt-3 m-auto'>
@@ -100,8 +105,10 @@ function Login() {
 </table>
       </div>
     </div>
+    </div>
+    </div>
     </>
   );
 }
 
-export default Login;
+export default App_Product;
