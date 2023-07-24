@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import AppRouter from './Components/Login'
+import AppRouter from '../AppRouter'
 
 function App() {
 

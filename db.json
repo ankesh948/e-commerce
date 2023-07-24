@@ -1,0 +1,14 @@
+{
+  "products": [
+    {
+      "title": "Heading",
+      "image": {},
+      "id": 1
+    },
+    {
+      "title": "Heading",
+      "image": {},
+      "id": 2
+    }
+  ]
+}
