@@ -67,8 +67,6 @@ app.post("/api/products", upload.single('thumbnail'), (request, response) => {
 
 
 
-
-
 // GET API to fetch all products
 app.get("/api/products", (request, response) => {
   // Retrieve all products from the 'products' table
@@ -83,6 +81,52 @@ app.get("/api/products", (request, response) => {
     return response.status(200).json(result);
   });
 });
+
+
+
+// DELETE API to delete a product by ID
+app.delete("/api/products/:id", (request, response) => {
+  const productId = request.params.id;
+  const sql = 'DELETE FROM products WHERE id = ?';
+  db.query(sql, productId, (err, result) => {
+    if (err) {
+      console.error('Error deleting product from the database:', err);
+      return response.status(500).json({ error: 'Error deleting product from the database.' });
+    }
+
+    if (result.affectedRows === 0) {
+      return response.status(404).json({ error: 'Product not found.' });
+    }
+    return response.status(200).json({ message: 'Product deleted successfully.' });
+  });
+});
+
+// PUT API to update a product by ID
+app.put("/api/products/:id", upload.single('thumbnail'), (request, response) => {
+  const productId = request.params.id;
+  const { title, description, price } = request.body;
+  const thumbnail = request.file?.filename; // Use the new generated unique filename, if a new thumbnail is uploaded
+  if (!title || !description || !price) {
+    return response.status(400).json({ error: 'All fields are required.' });
+  }
+  const sql = 'UPDATE products SET title = ?, description = ?, price = ?, thumbnail = ? WHERE id = ?';
+  const values = [title, description, price, thumbnail, productId];
+
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error updating product in the database:', err);
+      return response.status(500).json({ error: 'Error updating product in the database.' });
+    }
+    if (result.affectedRows === 0) {
+      return response.status(404).json({ error: 'Product not found.' });
+    }
+    return response.status(200).json({ message: 'Product updated successfully.' });
+  });
+});
+
+
+
+
 
 app.listen(port, () => {
   console.log('I am live again');
