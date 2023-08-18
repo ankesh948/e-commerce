@@ -9,7 +9,8 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "node server.js"
+    "start": "node server.js",
+    "and": "nodemon server.js"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -22,6 +23,7 @@
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.5.2",
+    "nodemon": "^3.0.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-data-table-component": "^7.5.3",
