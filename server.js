@@ -1,10 +1,16 @@
 import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import multer from 'multer';
+import path from 'path'; 
+
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 const app = express();
 const port = process.env.PORT || 4000;
-// connectToMongo();
-app.use(express.json()); // Add this line to parse JSON request bodies
+app.use(bodyParser.json());
+app.use(cors());
+// app.use(express.json()); // Add this line to parse JSON request bodies
 
 
 const uri = "mongodb+srv://ankeshthakur948:9KVbTMBea793j69B@cluster0.xdf5yku.mongodb.net/?retryWrites=true&w=majority";
@@ -27,8 +33,40 @@ async function connectToMongo() {
   }
 }
 
-app.post('/api/products', async (req, res) => {
-  const productData = req.body; // Assuming your frontend sends the product data as JSON
+// Call connectToMongo before setting up routes
+connectToMongo();
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    // Use the original filename of the uploaded image
+    const uniqueSuffix = Date.now() + path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix);
+  }
+});
+const upload = multer({ storage: storage });
+
+
+app.post("/api/products", upload.single('thumbnail'), async (req, res) => { 
+
+    const { title, description, price, discountPercentage, stock, brand, category } = req.body;
+    const thumbnail = req.file.filename; 
+
+    const productData = {
+      title,
+      description,
+      price,
+      discountPercentage,
+      stock,
+      brand,
+      category,
+      thumbnail,
+    };
+
+   
   try {
     const productsCollection = client.db("Ecommerce").collection("Products");
     const result = await productsCollection.insertOne(productData);
