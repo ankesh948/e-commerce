@@ -1,16 +1,17 @@
 import React from 'react'
-import Header from '../Components/Header'
 import Sidebar from '../Components/Sidebar'
 
 const Dashboard = () => {
   return (
     <>
-    <Header />
-    <div className="d-flex">
+  
+    <div className="container-fluid">
+    <div className="d-flex gap-4 mt-4">
         <Sidebar/>
         <div className="main">
             <h1>Dashboard</h1>
         </div>
+    </div>
     </div>
 
     </>

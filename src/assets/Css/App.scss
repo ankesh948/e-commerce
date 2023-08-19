@@ -1,0 +1,131 @@
+  @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  body {
+    background: #ffffff;
+    color: rgb(25, 25, 25);
+    font-family: 'Jost', sans-serif !important;
+  }
+  .header {
+    background: #f7f7f7;
+    padding: 5px;
+    box-shadow: 0px -3px 12px #00000057;
+  }
+  a.dashboard-logo {
+    padding: 40px 30px 10px;
+    display: block;
+    width: 100%;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid #ffffff50;
+}
+
+  .sidebar {
+    width: 18%;
+    background: #E91E63;
+    height: calc(100vh - 50px);
+    border-radius: 60px;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      padding: 0;
+      margin: 50px 0 0;
+
+      li a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-bottom: 1px solid #ffffff30;
+        width: 100%;
+        display: block;
+        transition: all 0.3s;
+
+        &:hover{
+          background: white;
+          color: #444;
+          transition: all 0.4s;
+        }
+    }
+    }
+  }
+
+  .main {
+    width: 82%;
+    padding: 20px 30px;
+    border: 1px solid #00000030;
+    border-radius: 60px;
+}
+
+  .logo {
+    width: 80px;
+    rotate: 180deg;
+  }
+
+  .container {
+    width: 90% !important;
+    max-width: 90% !important;
+  }
+
+  #header-custom {
+    background: #fff !important;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, .05);
+  }
+
+  .banner {
+    margin-top: 20px;
+  }
+
+  a.nav-link {
+    font-weight: 600;
+    color: #282c3f;
+  }
+
+  .dropdown-item:focus,
+  .dropdown-item:hover {
+    color: #ffffff;
+    background-color: pink;
+  }
+
+  .carticon {
+    border: 1px solid #44444420;
+    padding: 4px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  span.count {
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    font-size: 10px;
+    background: #E91E63;
+    width: 20px;
+    height: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 20px;
+  }
+
+  .searcharea {
+    width: 30%;
+  }
+
+  #logincustom {
+    input {
+      padding: 15px 30px;
+    }
+  }
+  input{
+    padding: 12px 30px !important; 
+  }

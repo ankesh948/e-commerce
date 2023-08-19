@@ -114,23 +114,18 @@ axios
 
   return (
     <>
-      <Header />
-      <div className="d-flex">
+    <div className="container-fluid">
+    <div className="d-flex gap-4 mt-4">
         <Sidebar />
         <div className="main">
-          <div className="border p-3 d-flex justify-content-between mb-4">
-            <h1>Product List</h1>
-            <Button variant="info" onClick={handleShow}>
-              Add Product
-            </Button>
+          <div className="border-bottom p-3 d-flex justify-content-between mb-4">
+            <h1>Add Product</h1>
+            <button className="btn btn-outline-dark"  onClick={handleShow}>
+              Go to Product List
+            </button>
           </div>
 
-    <Modal show={show} onHide={handleClose} animation={false}>
-      <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      <form method="POST" onSubmit={(e)=>handleUpdate(sigleId, e)} encType="multipart/form-data">
+<form className="" method="POST" onSubmit={(e)=>handleUpdate(sigleId, e)} encType="multipart/form-data">
   <label htmlFor="title">Product Title</label>
   <input
     type="text"
@@ -180,17 +175,16 @@ axios
       onChange={(e) => setThumbnail(e.target.value)}
     />
   </div>
-  <button className="btn btn-info w-100 mt-3" type="submit">
-    Add Product
+  <button className="btn btn-dark rounded-pill btn-lg px-4 mt-3" type="submit">
+    Submit
   </button>
 </form>
-      </Modal.Body>
-    </Modal>
 
 
 
 
-          <table className='table table-striped table-bordered table-hover'>
+
+          {/* <table className='table table-striped table-bordered table-hover'>
         <thead>
           <tr>
             <th>Images</th>
@@ -224,9 +218,10 @@ axios
           })
         }
       </tbody>
-      </table>
+      </table> */}
 
         </div>
+      </div>
       </div>
     </>
   );
