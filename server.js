@@ -48,7 +48,7 @@ const upload = multer({ storage: storage });
 // Inserting data, added by Ankesh
 app.post("/api/products", upload.single('thumbnail'), async (req, res) => { 
     const { title, description, price, discountPercentage, stock, brand, category } = req.body;
-    const thumbnail = req.file.filename; 
+    const thumbnail = 'http://localhost:5173/uploads/'+req.file.filename; 
     const productData = {
       title, description, price, discountPercentage, stock, brand, category, thumbnail,
     };
@@ -100,12 +100,12 @@ app.put("/api/products/:productId", upload.single('thumbnail'), async (req, res)
     title, description, price, discountPercentage, stock, brand, category,
   };
   if (req.file) {
-    updateData.thumbnail = req.file.filename;
+    updateData.thumbnail = 'http://localhost:5173/uploads/'+req.file.filename; 
   }
   try {
     const productsCollection = client.db("Ecommerce").collection("Products");
     const result = await productsCollection.updateOne(
-      { _id: ObjectId(productId) },
+      { _id: new ObjectId(productId) },
       { $set: updateData }
     );
 
@@ -120,6 +120,46 @@ app.put("/api/products/:productId", upload.single('thumbnail'), async (req, res)
   }
 });
 
+//Getting Data By Id Added by Ankesh
+app.get("/api/products/:id", async (req, res) => {
+  const productId = req.params.id; // Get the product ID from the URL parameter
+  try {
+    const productsCollection = client.db("Ecommerce").collection("Products");
+    const product = await productsCollection.findOne({ _id: new ObjectId(productId) });
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.status(200).json(product);
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
+
+
+
+
+
+
+/***************************************************Categories Code***************************************************************/
+app.post('/api/category', async (req, res) => {
+  const { categoryName, categorySlug } = req.body;
+  const categoryData = {
+    categoryName,
+    categorySlug,
+  };
+  try {
+    const CategoriesCollection = client.db("Ecommerce").collection("Categories");
+    const result = await CategoriesCollection.insertOne(categoryData);
+    res.status(201).json({ message: "Category added successfully", categoryId: result.insertedId });
+  } catch (error) {
+    console.error("Error adding Category:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 
 

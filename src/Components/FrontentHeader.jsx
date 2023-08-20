@@ -9,10 +9,9 @@ const FrontentHeader = () => {
         <div className="container">
           <Link
             to="/"
-            className="navbar-brand me-5"
-            style={{ fontWeight: "bold" }}
+            className="navbar-brand logo me-5"
           >
-            <img src="../src/assets/Img/logo.png" className="logo" alt="logo" />
+            E-SHOPING
           </Link>
           <button
             className="navbar-toggler"

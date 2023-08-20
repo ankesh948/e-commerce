@@ -28,13 +28,13 @@ const Sidebar = () => {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to="/add_product">Add Product</Link>
+            <Link to="/add-product">Add Product</Link>
           </li>
           <li>
-            <Link to="/product_list">Product List</Link>
+            <Link to="/product-list">Product List</Link>
           </li>
           <li>
-            <Link to="/">Product Categories</Link>
+            <Link to="/manage-categories">Product Categories</Link>
           </li>
           <li>
             <Link to="/users">User Management</Link>

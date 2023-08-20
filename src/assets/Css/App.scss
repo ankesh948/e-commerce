@@ -67,8 +67,12 @@
 }
 
   .logo {
-    width: 80px;
-    rotate: 180deg;
+    font-weight: bold;
+    font-size: 25px;
+    color: #E91E63;
+    background: -webkit-linear-gradient(4deg, #E91E63, #311B92);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .container {
@@ -142,9 +146,16 @@
     font-weight: 500;
     color: #444;
 }
+ #categorypage .w-10 {
+  width: 30%;
+  font-size: 20px;
+  font-weight: 500;
+  color: #444;
+}
 
 th {
   padding: 1rem 0.5rem!important;
   background: #010e4e!important;
   color: white!important;
 }
+

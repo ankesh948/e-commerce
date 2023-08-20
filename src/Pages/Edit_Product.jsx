@@ -1,25 +1,57 @@
-import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import Sidebar from "../Components/Sidebar";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import Sidebar from '../Components/Sidebar';
+import axios from 'axios';
 
-function App_Product() {
 
+const Edit_Product = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
+
+  const [singleId, setSingleId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState("");
   const [stock, setStock] = useState("");
   const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("Uncategorized");
+  const [category, setCategory] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const productData = {
+
+  useEffect(() => {
+    async function fetchDataById() {
+      try {
+        const response = await axios.get(`http://localhost:4000/api/products/${id}`);
+        const data = response.data;
+
+        setSingleId(data.id);
+        setTitle(data.title);
+        setDescription(data.description);
+        setPrice(data.price);
+        setDiscountPercentage(data.discountPercentage);
+        setStock(data.stock);
+        setBrand(data.brand);
+        setCategory(data.category);
+        setThumbnail(data.thumbnail);
+       
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchDataById();
+  }, []);
+
+
+
+
+  async function handleUpdate(e) {
+    e.preventDefault()
+
+    const updatedData = {
       title,
       description,
       price,
@@ -29,29 +61,35 @@ function App_Product() {
       category,
       thumbnail,
     };
-    console.log('frontend',productData)
-    axios.post("http://localhost:4000/api/products", productData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        navigate('/product-list');
-      })
-      .catch((err) => {
-        console.error('api not working',err);
-      });
-  };
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/api/products/${id}`,
+        updatedData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response);
+      navigate('/product-list');
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
 
   return (
     <>
-      <div className="container-fluid">
+
+<div className="container-fluid">
         <div className="d-flex gap-4 mt-4">
           <Sidebar />
           <div className="main">
             <div id="headerdashboard" className="border-bottom py-3 px-5 d-flex justify-content-between mb-4">
-              <h1>Add Product</h1>
+              <h1>Edit Product</h1>
               <Link to="/product-list">
                 <button className="btn btn-dark rounded-pill">
                   Go to Product List
@@ -63,7 +101,7 @@ function App_Product() {
             <form
               className=""
               method="POST"
-              onSubmit={(e) => handleSubmit(e)}
+              onSubmit={(e) => handleUpdate(e)}
               encType="multipart/form-data"
             >
               <div className="d-flex gap-5 align-items-center">
@@ -75,6 +113,7 @@ function App_Product() {
                   id="title"
                   className="form-control mb-2"
                   placeholder="Title"
+                  value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
                 />
@@ -89,6 +128,7 @@ function App_Product() {
                   id="description"
                   className="form-control mb-2"
                   placeholder="Description"
+                  value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
                 ></textarea>
@@ -103,6 +143,7 @@ function App_Product() {
                   id="price"
                   className="form-control mb-2"
                   placeholder="Price"
+                  value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   required
                 />
@@ -117,6 +158,7 @@ function App_Product() {
                   id="discountPercentage"
                   className="form-control mb-2"
                   placeholder="Discount Percentage"
+                  value={discountPercentage}
                   onChange={(e) => setDiscountPercentage(e.target.value)}
                 />
               </div>
@@ -129,6 +171,7 @@ function App_Product() {
                   id="stock"
                   className="form-control mb-2"
                   placeholder="Stock"
+                  value={stock}
                   onChange={(e) => setStock(e.target.value)}
                   required
                 />
@@ -142,6 +185,7 @@ function App_Product() {
                   id="brand"
                   className="form-control mb-2"
                   placeholder="Brand"
+                  value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                   required
                 />
@@ -153,6 +197,7 @@ function App_Product() {
                 <select
                   id="category"
                   className="form-control mb-2"
+                  value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   required
                 >
@@ -161,7 +206,6 @@ function App_Product() {
                   <option value="option2">Option 2</option>
                 </select>
               </div>
-
 
               <div className="d-flex gap-5 align-items-center">
                 <label className="w-10 mb-0" htmlFor="thumbnail">
@@ -175,6 +219,13 @@ function App_Product() {
                   onChange={(e) => setThumbnail(e.target.files[0])}
                 />
               </div>
+
+             <div className="d-flex">
+             <div className='w-10 px-5'></div>
+              <div className='p-3'>
+                <img src={`../../uploads/${thumbnail}`} width={70} alt="" />
+              </div>
+             </div>
               <button
                 className="btn btn-dark rounded-pill btn-lg px-4 mt-3"
                 type="submit"
@@ -185,8 +236,9 @@ function App_Product() {
           </div>
         </div>
       </div>
+
     </>
-  );
+  )
 }
 
-export default App_Product;
+export default Edit_Product
