@@ -24,15 +24,14 @@
 
   .sidebar {
     width: 18%;
-    background: #E91E63;
+    background: linear-gradient(189deg, #000b4a, #0D47A1);
     height: calc(100vh - 50px);
     border-radius: 60px;
 
-    ul {
+     ul {
       list-style: none;
       padding: 0;
-      padding: 0;
-      margin: 50px 0 0;
+      margin: 0 0 0;
 
       li a {
         color: #fff;
@@ -48,15 +47,23 @@
           color: #444;
           transition: all 0.4s;
         }
-    }
+      }
+      .active{
+        background: rgb(255, 255, 255);
+        color: black;
+      }
     }
   }
-
+  #headerdashboard{
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0 2px 6px #00000021;
+}
   .main {
     width: 82%;
     padding: 20px 30px;
-    border: 1px solid #00000030;
     border-radius: 60px;
+    background: #f0f6ff;
 }
 
   .logo {
@@ -134,4 +141,10 @@
     font-size: 20px;
     font-weight: 500;
     color: #444;
+}
+
+th {
+  padding: 1rem 0.5rem!important;
+  background: #010e4e!important;
+  color: white!important;
 }

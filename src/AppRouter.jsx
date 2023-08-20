@@ -2,8 +2,8 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './Pages/Dashboard'
 import Add_Product from "./Pages/Add_Product"
-import Login from './Pages/Login'
 import Product_List from './Pages/Product_List'
+import Login from './Pages/Login'
 import HomePage from './Pages/HomePage'
 
 const AppRouter = () => {
@@ -14,6 +14,7 @@ const AppRouter = () => {
                 <Route exact path='/' element={<HomePage />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/add_product' element={<Add_Product />} />
+                <Route path='/product_list' element={<Product_List />} />
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/z' element={<Product_List />} />
             </Routes>
