@@ -10,15 +10,27 @@ const Login = () => {
     e.preventDefault();
     const formData = {
       Email,
-      Password
+      Password,
     };
-      try {
-        const response = await axios.post("http://localhost:4000/api/login", formData);
-        console.log(response.data);
-      } catch (error) {
-        console.error("API not working", error);
-      }
-  };
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/login",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      console.log(response.data);
+    } 
+
+    catch(err){
+      console.error('api not working',err);
+    };
+
+  }
 
   return (
     <>
@@ -29,9 +41,9 @@ const Login = () => {
             <div className="col-12">
               <form
                 id="logincustom"
+                method="POST"
                 onSubmit={(e) => handleSubmit(e)}
                 className="card m-auto w-50 p-5"
-                encType="multipart/form-data"
               >
                 <h1 className="text-center pb-5">Login Form</h1>
                 <div className="form-outline mb-3">
