@@ -4,16 +4,17 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const path = require('path')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
 const app = express();
 const port = process.env.PORT || 4000;
 app.use(bodyParser.json());
+
 app.use(cors());
 app.use(express.json()); 
 
 const uri = "mongodb+srv://ankeshthakur948:9kjDCbGrhAxuECCp@cluster0.xdf5yku.mongodb.net/?retryWrites=true&w=majority";
-
-
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -21,7 +22,6 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
-
 async function connectToMongo() {
   try {
     await client.connect();
@@ -36,7 +36,7 @@ connectToMongo();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, '../Client/uploads/');
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + path.extname(file.originalname);
@@ -44,6 +44,31 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
+
+
+
+/*************Login***********************/
+
+const secretKey = crypto.randomBytes(32).toString('hex');
+
+app.post('/api/login', async (req, res) => {
+  const { Email, Password } = req.body;
+  try {
+    const UsersCollection = client.db("Ecommerce").collection("Users");
+    const user = await UsersCollection.findOne({ Email, Password });
+    if (user) {
+      const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+      res.json({ token });
+    } else {
+      res.json({ error: 'Invalid credentials' });
+    }
+  } catch (error) {
+    res.json({ error: 'An error occurred' });
+  }
+});
+
+
+
 
 // Inserting data, added by Ankesh
 app.post("/api/products", upload.single('thumbnail'), async (req, res) => { 
@@ -162,27 +187,6 @@ app.post('/api/category', async (req, res) => {
 });
 
 
-
-
-
-/*************Login***************/
-
-
-
-app.post('/api/login', async (req, res) => {
-  const { Email, Password } = req.body;
-  try {
-    const UsersCollection = client.db("Ecommerce").collection("Users");
-    const user = await UsersCollection.findOne({Email, Password});
-    if (user) {
-      res.json({ message: 'Login successful' });
-    } else {
-      res.status(401).json({ error: 'Invalid credentials' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred' });
-  }
-});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
