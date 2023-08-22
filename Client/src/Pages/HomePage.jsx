@@ -9,9 +9,6 @@ const HomePage = () => {
   const [fetchProductData, setFetchProductData] = useState([]);
   const [cart, setCart] = useState([]);
 
-
-  console.log(cart)
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -25,6 +22,7 @@ const HomePage = () => {
       console.error("Error fetching data:", error);
     }
   }
+
   const handleAddToCart = (id) => {
       const selectedProduct = fetchProductData.find(product => product._id == id);
       if (selectedProduct) {

@@ -144,7 +144,7 @@ app.get("/api/products/:id", async (req, res) => {
 
 
 
-/***************************************************Categories Code***************************************************************/
+/******************************Categories code******************************/
 app.post('/api/category', async (req, res) => {
   const { categoryName, categorySlug } = req.body;
   const categoryData = {
@@ -162,6 +162,27 @@ app.post('/api/category', async (req, res) => {
 });
 
 
+
+
+
+/*************Login***************/
+
+
+
+app.post('/api/login', async (req, res) => {
+  const { Email, Password } = req.body;
+  try {
+    const UsersCollection = client.db("Ecommerce").collection("Users");
+    const user = await UsersCollection.findOne({Email, Password});
+    if (user) {
+      res.json({ message: 'Login successful' });
+    } else {
+      res.status(401).json({ error: 'Invalid credentials' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
