@@ -9,13 +9,13 @@ import { useEffect } from 'react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState('');
+//   const [token, setToken] = useState('');
 
-useEffect(()=>{
-  if (!token) {
-    navigate('/login');
-  }
-},[''])
+// useEffect(()=>{
+//   if (!token) {
+//     navigate('/login');
+//   }
+// },[''])
 
   return (
     <>
