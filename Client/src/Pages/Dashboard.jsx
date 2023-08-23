@@ -1,21 +1,8 @@
 import React from 'react'
 import Sidebar from '../Components/Sidebar'
-import { useState } from 'react';
-import Login from './Login';
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from 'react';
-
-
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-//   const [token, setToken] = useState('');
-
-// useEffect(()=>{
-//   if (!token) {
-//     navigate('/login');
-//   }
-// },[''])
+  
 
   return (
     <>

@@ -1,10 +1,40 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import jwtDecode from 'jwt-decode';
+
 
 const Login = () => {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000; // Convert to seconds
+      
+      if (decodedToken.exp < currentTime) {
+        navigate('/login');
+      } else {
+        navigate('/dashboard');
+      }
+      const intervalId = setInterval(() => {
+        const updatedTime = Date.now() / 1000;
+
+        if (decodedToken.exp < updatedTime) {
+          console.log('Token has expired');
+          navigate('/login');
+          clearInterval(intervalId); // Clear the interval once token expires
+        }
+      }, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [token]);
+ 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,19 +42,24 @@ const Login = () => {
       Email,
       Password,
     };
+
     axios.post("http://localhost:4000/api/login", formData, {
       headers: {
         "Content-Type": "application/json",
       },
     })
     .then((res) => {
-      console.log(res);
-
       const token = res.data.token;
+      const Email = res.data.user.Email;
+      const FullName = res.data.user.FullName;
+      localStorage.setItem('Email', Email);
+      localStorage.setItem('FullName', FullName);
       localStorage.setItem('token', token);
 
+      console.log(res.data)
       setEmail('')
       setPassword('')
+      navigate('/dashboard');
     })
     .catch((err) => {
       console.error('api not working',err);

@@ -1,8 +1,39 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import {useNavigate } from "react-router-dom";
+import jwtDecode from 'jwt-decode';
 
 const Sidebar = () => {
+
+const navigate = useNavigate();
+
+    const [token, setToken] = useState(localStorage.getItem('token') || null);
+    useEffect(() => {
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000; // Convert to seconds
+        if (decodedToken.exp < currentTime) {
+          console.log('Token has expired');
+          navigate('/login');
+        } else {
+          console.log('Token is live');
+          navigate('/dashboard');
+        }
+        // Set up a timer to check for token expiration periodically
+        const intervalId = setInterval(() => {
+          const updatedTime = Date.now() / 1000;
+          if (decodedToken.exp < updatedTime) {
+            console.log('Token has expired');
+            navigate('/login');
+            clearInterval(intervalId); // Clear the interval once token expires
+          }
+        }, 5000);
+        return () => clearInterval(intervalId);
+      }
+    }, [token]);
+
+
   useEffect(() => {
     const menuItems = document.querySelectorAll('.sidebar ul li a');
     const handleClick = (event) => {

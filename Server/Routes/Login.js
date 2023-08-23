@@ -10,9 +10,8 @@ route.post('/', async (req, res) => {
     const UsersCollection = client.db("Ecommerce").collection("Users");
     const user = await UsersCollection.findOne(req.body);
     if (user) {
-      const token = jwt.sign({ userId: user.Email }, secretKey, { expiresIn: '1h' });
-      res.json({user, token });
-      console.log(user)
+      const token = jwt.sign({ Email: user.Email }, secretKey, { expiresIn: '20s' });
+      res.json({user, token});
     } else {
       res.json({ error: 'Invalid credentials' });
     }
