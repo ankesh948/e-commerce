@@ -4,9 +4,7 @@ import Sidebar from "../Components/Sidebar";
 import { Link, useNavigate } from "react-router-dom";
 
 function App_Product() {
-
   const navigate = useNavigate();
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -15,7 +13,6 @@ function App_Product() {
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("Uncategorized");
   const [thumbnail, setThumbnail] = useState(null);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,19 +26,17 @@ function App_Product() {
       category,
       thumbnail,
     };
-    console.log('frontend',productData)
-    axios.post("http://localhost:4000/api/products", productData, {
+    try{
+      const result = await axios.post("http://localhost:4000/api/products", productData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => {
-        console.log(res.data);
-        navigate('/product-list');
-      })
-      .catch((err) => {
-        console.error('api not working',err);
-      });
+      navigate('/product-list');
+    }
+    catch(err){
+        console.error('api not working', err);
+    }
   };
 
   return (
@@ -58,13 +53,10 @@ function App_Product() {
                 </button>
               </Link>
             </div>
-
-          
             <form
               className=""
               method="POST"
               onSubmit={(e) => handleSubmit(e)}
-              encType="multipart/form-data"
             >
               <div className="d-flex gap-5 align-items-center">
                 <label className="w-10 mb-0" htmlFor="title">

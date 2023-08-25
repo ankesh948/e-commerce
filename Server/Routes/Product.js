@@ -10,7 +10,7 @@ const client = require("../config.js")
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '../../Client/uploads/');
+    cb(null, '../Client/uploads/');
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + path.extname(file.originalname);
@@ -35,6 +35,27 @@ productRoute.post("/", upload.single('thumbnail'), async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Getting Data Added by Ankesh
 productRoute.get("/", async (req, res) => {

@@ -15,7 +15,7 @@ const ManageCategory = () => {
             categoryName,
             categorySlug
         }
-
+        console.log(formData)
         axios.post("http://localhost:4000/api/category", formData)
           .then((res) => {
             console.log(res.data);

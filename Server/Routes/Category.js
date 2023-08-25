@@ -1,8 +1,10 @@
 const express = require('express')
 const categoryRoute = express.Router();
+const client = require("../config.js")
+const middleware = require("../middleWare.js")
 
-/******************************Categories code******************************/
-categoryRoute.post('/', async (req, res) => {
+
+categoryRoute.post('/', middleware, async (req, res) => {
     const { categoryName, categorySlug } = req.body;
     const categoryData = {
       categoryName,

@@ -18,7 +18,7 @@ const port = process.env.PORT || 4000;
 
 app.use("/api/login", loginRoute);
 app.use("/api/products", productRoute);
-app.use("/api/categry", categoryRoute);
+app.use("/api/category", categoryRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

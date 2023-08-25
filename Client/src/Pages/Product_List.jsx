@@ -3,11 +3,23 @@ import { useState } from "react";
 import Sidebar from "../Components/Sidebar";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Edit_Product from "./Edit_Product";
 
 const Product_List = () => {
-  const [fetchProductData, setFetchProductData] = useState([]);
 
+const [fetchProductData, setFetchProductData] = useState([]);
+const [searchData, setSearchData] = useState("");
+
+
+function searchHandle(e){
+  const searchData = e.target.value;
+console.log(searchData)
+  const filterBySearch = fetchProductData.filter((item) => {
+    return item.title.toLowerCase().includes(searchData.toLowerCase());
+  });
+  setFetchProductData(filterBySearch);
+}
+
+  
   useEffect(() => {
     fetchData();
   }, []);
@@ -21,7 +33,6 @@ const Product_List = () => {
       console.error("Error fetching data:", error);
     }
   }
-
 
   async function handleDelete(id) {
     try {
@@ -42,12 +53,7 @@ const Product_List = () => {
       if (response.status === 200) {
         // Filter out the deleted product from the state
         setFetchProductData((prevData) => prevData.filter(product => product._id !== id));
-
         console.log(fetchProductData)
-
-
-        
-        
       } else {
         console.error("Error deleting product:", response.statusText);
       }
@@ -56,8 +62,6 @@ const Product_List = () => {
     }
   }
 
-  
-  
   return (
     <>
       <div className="container-fluid">
@@ -69,6 +73,10 @@ const Product_List = () => {
               <Link to="/add-product">
                 <button className="btn btn-dark rounded-pill px-5">Add Product</button>
               </Link>
+            </div>
+
+            <div className="col-lg-6 mb-4">
+            <input type="text" onChange={searchHandle} className="form-control" placeholder="Search Box" />
             </div>
 
             <table className="table table-striped table-bordered table-hover">

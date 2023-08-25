@@ -4,7 +4,7 @@
     margin: 0;
   }
   body {
-    background: #ffffff;
+    background: white;
     color: rgb(25, 25, 25);
     font-family: 'Jost', sans-serif !important;
   }
@@ -61,9 +61,8 @@
 }
   .main {
     width: 82%;
-    padding: 20px 30px;
+    padding: 0 0;
     border-radius: 60px;
-    background: #f0f6ff;
 }
 
   .logo {
@@ -154,11 +153,8 @@
 }
 
 th {
-  padding: 1rem 0.5rem!important;
-  background: #010e4e!important;
-  color: white!important;
+  padding: 0.65rem 0.5rem !important;
 }
-
 
 .cproducts {
   width: 23%;
