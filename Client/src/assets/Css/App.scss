@@ -1,18 +1,22 @@
   @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
   * {
     padding: 0;
     margin: 0;
   }
+
   body {
     background: white;
     color: rgb(25, 25, 25);
     font-family: 'Jost', sans-serif !important;
   }
+
   .header {
     background: #f7f7f7;
     padding: 5px;
     box-shadow: 0px -3px 12px #00000057;
   }
+
   a.dashboard-logo {
     padding: 40px 30px 10px;
     display: block;
@@ -20,7 +24,7 @@
     color: white;
     text-decoration: none;
     border-bottom: 1px solid #ffffff50;
-}
+  }
 
   .sidebar {
     width: 18%;
@@ -28,7 +32,7 @@
     height: calc(100vh - 50px);
     border-radius: 60px;
 
-     ul {
+    ul {
       list-style: none;
       padding: 0;
       margin: 0 0 0;
@@ -42,28 +46,31 @@
         display: block;
         transition: all 0.3s;
 
-        &:hover{
+        &:hover {
           background: white;
           color: #444;
           transition: all 0.4s;
         }
       }
-      .active{
+
+      .active {
         background: rgb(255, 255, 255);
         color: black;
       }
     }
   }
-  #headerdashboard{
+
+  #headerdashboard {
     background: #fff;
     border-radius: 50px;
     box-shadow: 0 2px 6px #00000021;
-}
+  }
+
   .main {
     width: 82%;
     padding: 0 0;
     border-radius: 60px;
-}
+  }
 
   .logo {
     font-weight: bold;
@@ -136,73 +143,108 @@
       padding: 12px 15px;
     }
   }
-  input, textarea, select{
-    padding: 12px 15px !important; 
+
+  input,
+  textarea,
+  select {
+    padding: 12px 15px !important;
   }
-  .w-10 {
-    width: 15%;
+
+  .addpro .w-10 {
+    width: 16%;
     font-size: 20px;
     font-weight: 500;
-    color: #444;
-}
- #categorypage .w-10 {
-  width: 30%;
-  font-size: 20px;
-  font-weight: 500;
-  color: #444;
-}
+  }
 
-th {
-  padding: 0.65rem 0.5rem !important;
-}
+  #categorypage {
+    form {
+      background: #3f3f3f;
+    }
 
-.cproducts {
-  width: 23%;
-  border: 1px solid #44444420;
-  border-radius: 4px;
-  position: relative;
-  cursor: pointer;
+    .w-10 {
+      width: 30%;
+      font-size: 20px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+  }
 
-  .brandbx {
-    position: absolute;
-    top: 20px;
-    left: 0;
-    background: linear-gradient(97deg, #e11e65, #491b8b);
-    padding: 4px 30px;
+  th {
+    padding: 0.65rem 0.5rem !important;
+  }
+
+  .cproducts {
+    width: 23%;
+    border: 1px solid #44444420;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+
+    .brandbx {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      background: linear-gradient(97deg, #e11e65, #491b8b);
+      padding: 4px 30px;
+      color: white;
+      font-size: 21px;
+      box-shadow: 0px 6px 18px #0000005c;
+      border-radius: 0 20px 20px 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s;
+
+    }
+
+    &:hover .brandbx {
+      opacity: 1;
+      visibility: visible;
+      transition: all 0.4s;
+    }
+
+    img {
+      height: 260px;
+    }
+  }
+
+  .innercproducts {
+    padding: 20px 20px;
+  }
+
+  p.oneline {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  span.discount {
+    font-size: 12px;
+    color: orange;
+  }
+
+  span.realprise {
+    color: #7c7c7c;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .pagination_div {
+    display: flex;
+    /* margin: auto; */
+    justify-content: center;
+    column-gap: 10px;
+  }
+  .box_pagination {
+    width: 30px;
+    border-radius: 10px;
+    border: none;
+  }
+  .btn-light {
     color: white;
-    font-size: 21px;
-    box-shadow: 0px 6px 18px #0000005c;
-    border-radius: 0 20px 20px 0;
-    opacity: 0;
-    visibility: hidden;
-  transition: all 0.4s;
-
+    background: linear-gradient(45deg, #00BCD4, #3F51B5);
+    border: none;
 }
-
- &:hover .brandbx {
-  opacity: 1;
-  visibility: visible;
-  transition: all 0.4s;
-}
-
- img {
-    height: 260px;
-}
-}
-.innercproducts {
-  padding: 20px 20px;
-}
-p.oneline {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-span.discount {
-  font-size: 12px;
-  color: orange;
-}
-span.realprise {
-  color: #7c7c7c;
-  font-size: 18px;
-  font-weight: 400;
+td{
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
 }

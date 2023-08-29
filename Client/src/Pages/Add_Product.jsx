@@ -54,7 +54,7 @@ function App_Product() {
               </Link>
             </div>
             <form
-              className=""
+              className="addpro"
               method="POST"
               onSubmit={(e) => handleSubmit(e)}
             >

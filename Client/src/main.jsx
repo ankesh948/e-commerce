@@ -7,8 +7,6 @@ import 'boxicons/dist/boxicons.js';
 import './assets/Css/App.scss'
 import './assets/Js/Script.js'
 
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />

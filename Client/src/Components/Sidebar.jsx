@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useEffect } from "react";
 import {useNavigate } from "react-router-dom";
 import jwtDecode from 'jwt-decode';
-
 const Sidebar = () => {
 
 const navigate = useNavigate();
@@ -31,21 +30,6 @@ const navigate = useNavigate();
       }
     }, [token]);
 
-
-  useEffect(() => {
-    const menuItems = document.querySelectorAll('.sidebar ul li a');
-    const handleClick = (event) => {
-      menuItems.forEach(item => item.classList.remove('active'));
-      event.target.classList.add('active');
-    };
-    menuItems.forEach(item => {
-      item.addEventListener('click', handleClick);
-      return () => {
-        item.removeEventListener('click', handleClick);
-      };
-    });
-  }, []); // Empty dependency array ensures this effect runs only once
-
   return (
     <>
       <div className="sidebar">
@@ -54,19 +38,19 @@ const navigate = useNavigate();
         </Link>
         <ul>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
           <li>
-            <Link to="/add-product">Add Product</Link>
+            <NavLink to="/add-product">Add Product</NavLink>
           </li>
           <li>
-            <Link to="/product-list">Product List</Link>
+            <NavLink to="/product-list">Product List</NavLink>
           </li>
           <li>
-            <Link to="/manage-categories">Product Categories</Link>
+            <NavLink to="/manage-categories">Product Categories</NavLink>
           </li>
           <li>
-            <Link to="/users">User Management</Link>
+            <NavLink to="/users">User Management</NavLink>
           </li>
         </ul>
       </div>
