@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import axios from "axios";
 import { render } from "react-dom";
+import { Wrapper } from "../context";
 
 const ManageCategory = () => {
 
+    const {fetchingCategoryData, setCategoryData} = useContext(Wrapper)
+
     const [categoryName, setCategoryName] = useState("");
     const [categorySlug, setCategorySlug] = useState("");
-    const [fetchingCategoryData, setCategoryData] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,15 +28,17 @@ const ManageCategory = () => {
           });
     };
 
-  useEffect(()=>{
-    axios.get("http://localhost:4000/api/category")
-      .then((res) => {
-        setCategoryData(res.data)
-      })
-      .catch((err) => {
-        console.error('api not working',err);
-      });
-  })
+    async function handleDelete(id) {
+      try {
+        const response = await axios.delete(`http://localhost:4000/api/category/${id}`);
+        console.log(response)
+        if (response.status === 200) {
+          setCategoryData(fetchingCategoryData.filter(category => category._id !== id));
+        }
+      } catch (error) {
+        console.error("Essrror deleting product:", error);
+      }
+    }
 
   return (
     <>
@@ -116,13 +120,13 @@ const ManageCategory = () => {
                     <td>{e.categorySlug}</td>
                     <td style={{width:'120px'}}>
                         <div className="d-flex gap-2">
-                          <Link to={`/edit-product/${e._id}`}>
+                          {/* <Link to={`/edit-product/${e._id}`}>
                           <button
                             className="btn"
                           >
                             <box-icon name="edit-alt" color="black"></box-icon>
                             </button>
-                          </Link>
+                          </Link> */}
 
                           <button
                             className="btn"

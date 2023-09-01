@@ -2,7 +2,7 @@ const express = require('express')
 const categoryRoute = express.Router();
 const client = require("../config.js")
 const middleware = require("../middleWare.js")
-
+const { ObjectId } = require("mongodb");
 
 categoryRoute.post('/', middleware, async (req, res) => {
     const { categoryName, categorySlug } = req.body;
@@ -31,16 +31,15 @@ categoryRoute.get("/", async (req, res) => {
   }
   });
 
-
-  categoryRoute.delete("/:productId", async (req, res) => {
-    const productId = req.params.productId;
+  categoryRoute.delete("/:id", async (req, res) => {
+    const Id = req.params.id;
     try {
-      const productsCollection = client.db("Ecommerce").collection("Categories");
-      const result = await productsCollection.deleteOne({ _id: new ObjectId(productId) });
+      const CategoriesCollection = client.db("Ecommerce").collection("Categories");
+      const result = await CategoriesCollection.deleteOne({ _id: new ObjectId(Id) });
       if (result.deletedCount === 1) {
-        res.status(200).json({ message: "Product deleted successfully" });
+        res.status(200).json({ message: "Category deleted successfully" });
       } else {
-        res.status(404).json({ message: "Product not found" });
+        res.status(404).json({ message: "Category not found" });
       }
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });

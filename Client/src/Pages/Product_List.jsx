@@ -31,24 +31,11 @@ const [fetchProductData, setFetchProductData] = useState([]);
     fetchData();
   }, []);
 
-  async function handleDelete(id) {
-    try {
-      const response = await axios.delete(`http://localhost:4000/api/products/${id}`);
-      if (response.status === 200) {
-        console.log(response.data);
-      } else {
-        console.error("Error deleting product:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
-  }
 
   async function handleDelete(id) {                               
     try {
       const response = await axios.delete(`http://localhost:4000/api/products/${id}`);
       if (response.status === 200) {
-        // Filter out the deleted product from the state
         setFetchProductData((prevData) => prevData.filter(product => product._id !== id));
         console.log(fetchProductData)
       } else {

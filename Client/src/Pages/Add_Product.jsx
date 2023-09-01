@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useState, useRef, useContext } from "react";
 import axios from "axios";
 import Sidebar from "../Components/Sidebar";
 import { Link, useNavigate } from "react-router-dom";
+import { Wrapper } from "../context";
+
 
 function App_Product() {
   const navigate = useNavigate();
@@ -14,18 +16,13 @@ function App_Product() {
   const [category, setCategory] = useState("Uncategorized");
   const [thumbnail, setThumbnail] = useState(null);
 
+
+  const {fetchingCategoryData} = useContext(Wrapper)
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const productData = {
-      title,
-      description,
-      price,
-      discountPercentage,
-      stock,
-      brand,
-      category,
-      thumbnail,
-    };
+    const productData = {title, description, price, discountPercentage, stock, brand, category, thumbnail};
     try{
       const result = await axios.post("http://localhost:4000/api/products", productData, {
         headers: {
@@ -142,15 +139,20 @@ function App_Product() {
                 <label className="w-10 mb-0" htmlFor="category">
                   Category
                 </label>
+
                 <select
                   id="category"
                   className="form-control mb-2"
                   onChange={(e) => setCategory(e.target.value)}
                   required
                 >
-                  <option value="uncategorized">Uncategorized</option>
-                  <option value="option1">Option 1</option>
-                  <option value="option2">Option 2</option>
+                  {
+                    fetchingCategoryData.map((e, i)=>{
+                      return(
+                        <option key={i} value={e.categoryName}>{e.categoryName}</option>
+                      )
+                    })
+                  }
                 </select>
               </div>
 

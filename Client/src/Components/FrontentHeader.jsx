@@ -60,7 +60,7 @@ const FrontentHeader = ({cartData}) => {
                     <span className='count'>{cartData}</span>
                 </div>
                 <Link to="/login"><button className="btn btn-md btn-outline-info">Login</button></Link>
-                <Link to="/regiter"><button className="btn btn-md btn-outline-warning">Register</button></Link>
+                <Link to="/register"><button className="btn btn-md btn-outline-warning">Register</button></Link>
             </div>
           </div>
         </div>
