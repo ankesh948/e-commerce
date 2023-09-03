@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import axios from "axios";
+import { useRef } from "react";
 
 const ManageCategory = () => {
 
     const [categoryName, setCategoryName] = useState("");
     const [categorySlug, setCategorySlug] = useState("");
 
+    const handleCategoryNameFocus = () => {
+      setCategorySlug(categoryName.toLowerCase());
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,9 +28,7 @@ const ManageCategory = () => {
             console.error('api not working',err);
           });
     };
-    
-
-
+  
 
 
   return (
@@ -70,9 +72,12 @@ const ManageCategory = () => {
                     </label>
                     <input
                       type="text"
+                      id="slug"
                       className="form-control mb-2"
                       placeholder="Category Slug"
+                      value={categorySlug}
                       onChange={(e) => setCategorySlug(e.target.value)}
+                      onFocus={handleCategoryNameFocus}
                       required
                     />
                   </div>
