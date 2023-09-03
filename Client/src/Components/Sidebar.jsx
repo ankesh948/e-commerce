@@ -1,14 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useEffect } from "react";
 import {useNavigate } from "react-router-dom";
 import jwtDecode from 'jwt-decode';
-
 const Sidebar = () => {
 
 const navigate = useNavigate();
 
-    const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
+
+  const logOutHandler = () =>{
+    if(localStorage.getItem('token')){
+      localStorage.clear();
+      setTimeout(()=>{
+        navigate("/login");
+        console.log('first')
+      }, 150)
+    }
+  }
 
     useEffect(() => {
       if (token) {
@@ -17,34 +26,10 @@ const navigate = useNavigate();
         if (decodedToken.exp < currentTime || null) {
           navigate('/login');
         }
-        // const intervalId = setInterval(() => {
-        //   const currentTime = Date.now() / 1000;
-        //   if (decodedToken.exp < currentTime) {
-        //     console.log('Token has expired');
-        //     navigate('/login');
-        //     clearInterval(intervalId);
-        //   }
-        // }, 5000);
-        // return () => clearInterval(intervalId);
       }else{
         navigate('/login');
       }
     }, [token]);
-
-
-  useEffect(() => {
-    const menuItems = document.querySelectorAll('.sidebar ul li a');
-    const handleClick = (event) => {
-      menuItems.forEach(item => item.classList.remove('active'));
-      event.target.classList.add('active');
-    };
-    menuItems.forEach(item => {
-      item.addEventListener('click', handleClick);
-      return () => {
-        item.removeEventListener('click', handleClick);
-      };
-    });
-  }, []); // Empty dependency array ensures this effect runs only once
 
   return (
     <>
@@ -54,19 +39,22 @@ const navigate = useNavigate();
         </Link>
         <ul>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
           <li>
-            <Link to="/add-product">Add Product</Link>
+            <NavLink to="/add-product">Add Product</NavLink>
           </li>
           <li>
-            <Link to="/product-list">Product List</Link>
+            <NavLink to="/product-list">Product List</NavLink>
           </li>
           <li>
-            <Link to="/manage-categories">Product Categories</Link>
+            <NavLink to="/manage-categories">Product Categories</NavLink>
           </li>
           <li>
-            <Link to="/users">User Management</Link>
+            <NavLink to="/users">User Management</NavLink>
+          </li>
+          <li>
+            <Link to="" onClick={()=>logOutHandler()}>Logout</Link>
           </li>
         </ul>
       </div>

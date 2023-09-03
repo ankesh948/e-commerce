@@ -6,52 +6,36 @@ import axios from "axios";
 
 const Product_List = () => {
 
+const [Data, setData] = useState([]);
 const [fetchProductData, setFetchProductData] = useState([]);
-const [searchData, setSearchData] = useState("");
 
-
-function searchHandle(e){
-  const searchData = e.target.value;
-console.log(searchData)
-  const filterBySearch = fetchProductData.filter((item) => {
-    return item.title.toLowerCase().includes(searchData.toLowerCase());
-  });
-  setFetchProductData(filterBySearch);
-}
-
+  function searchHandle(e){
+    const searchData = e.target.value;
+    const filterBySearch = Data.filter((item) => {
+      return item.title.toLowerCase().includes(searchData.toLowerCase());
+    });
+    setFetchProductData(filterBySearch);
+  }
   
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("http://localhost:4000/api/products");
+        const data = await response.json();
+        setData(data);
+        setFetchProductData(data)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
     fetchData();
   }, []);
 
-  async function fetchData() {
-    try {
-      const response = await fetch("http://localhost:4000/api/products");
-      const data = await response.json();
-      setFetchProductData(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
 
-  async function handleDelete(id) {
+  async function handleDelete(id) {                               
     try {
       const response = await axios.delete(`http://localhost:4000/api/products/${id}`);
       if (response.status === 200) {
-        console.log(response.data);
-      } else {
-        console.error("Error deleting product:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
-  }
-
-  async function handleDelete(id) {
-    try {
-      const response = await axios.delete(`http://localhost:4000/api/products/${id}`);
-      if (response.status === 200) {
-        // Filter out the deleted product from the state
         setFetchProductData((prevData) => prevData.filter(product => product._id !== id));
         console.log(fetchProductData)
       } else {
@@ -62,21 +46,32 @@ console.log(searchData)
     }
   }
 
+
   return (
     <>
       <div className="container-fluid">
         <div className="d-flex gap-4 mt-4">
           <Sidebar />
           <div className="main">
-            <div id="headerdashboard" className="border-bottom py-3 px-5 d-flex justify-content-between mb-4">
+            <div
+              id="headerdashboard"
+              className="border-bottom py-3 px-5 d-flex justify-content-between mb-4"
+            >
               <h1>Products List </h1>
               <Link to="/add-product">
-                <button className="btn btn-dark rounded-pill px-5">Add Product</button>
+                <button className="btn btn-dark rounded-pill px-5">
+                  Add Product
+                </button>
               </Link>
             </div>
 
             <div className="col-lg-6 mb-4">
-            <input type="text" onChange={searchHandle} className="form-control" placeholder="Search Box" />
+              <input
+                type="text"
+                onChange={searchHandle}
+                className="form-control"
+                placeholder="Search Box"
+              />
             </div>
 
             <table className="table table-striped table-bordered table-hover">
@@ -93,8 +88,9 @@ console.log(searchData)
                 </tr>
               </thead>
               <tbody>
-                {fetchProductData.length > 0 ? (
-                  fetchProductData.map((e) => (
+
+                {fetchProductData.length > 0 ?
+                (fetchProductData.map((e) => (
                     <tr key={e._id}>
                       <td>
                         <img
@@ -114,18 +110,19 @@ console.log(searchData)
                       <td>{e.stock}</td>
                       <td>{e.brand}</td>
                       <td>{e.category}</td>
-                      <td style={{width:'120px'}}>
+                      <td style={{ width: "120px" }}>
                         <div className="d-flex gap-2">
                           <Link to={`/edit-product/${e._id}`}>
-                          <button
-                            className="btn"
-                          >
-                            <box-icon name="edit-alt" color="black"></box-icon>
+                            <button className="btn py-0">
+                              <box-icon
+                                name="edit-alt"
+                                color="black"
+                              ></box-icon>
                             </button>
                           </Link>
 
                           <button
-                            className="btn"
+                            className="btn py-0"
                             onClick={() => handleDelete(e._id)}
                           >
                             <box-icon name="trash" color="red"></box-icon>
@@ -136,13 +133,23 @@ console.log(searchData)
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="8" style={{padding:'150px', fontSize: '40px'}} align="center">
+                    <td
+                      colSpan="8"
+                      style={{ padding: "150px", fontSize: "40px" }}
+                      align="center"
+                    >
                       Data Not Found
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
+
+            <div className="pagination">
+              <button onClick={()=>setPagination(pagination+1)}>Previous</button>
+              <button>Next</button>
+            </div>
+
           </div>
         </div>
       </div>

@@ -1,8 +1,11 @@
 import React from 'react'
 import Sidebar from '../Components/Sidebar'
+import { useContext } from 'react'
+import {Wrapper} from '../context'
 
 const Dashboard = () => {
-
+const {data}= useContext(Wrapper)
+console.log(data)
   return (
     <>
     <div className="container-fluid">

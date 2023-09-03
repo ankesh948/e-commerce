@@ -26,7 +26,6 @@ const Edit_Product = () => {
       try {
         const response = await axios.get(`http://localhost:4000/api/products/${id}`);
         const data = response.data;
-
         setSingleId(data.id);
         setTitle(data.title);
         setDescription(data.description);
@@ -50,17 +49,7 @@ const Edit_Product = () => {
 
   async function handleUpdate(e) {
     e.preventDefault()
-
-    const updatedData = {
-      title,
-      description,
-      price,
-      discountPercentage,
-      stock,
-      brand,
-      category,
-      thumbnail,
-    };
+    const updatedData = {title, description, price, discountPercentage, stock, brand, category, thumbnail};
     try {
       const response = await axios.put(
         `http://localhost:4000/api/products/${id}`,
@@ -73,7 +62,6 @@ const Edit_Product = () => {
       );
       console.log(response);
       navigate('/product-list');
-
     } catch (error) {
       console.error(error);
     }

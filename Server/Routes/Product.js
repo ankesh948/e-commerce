@@ -4,8 +4,6 @@ const multer = require('multer')
 const path = require('path')
 const { MongoClient, ObjectId } = require("mongodb");
 
-
-
 const client = require("../config.js")
 
 const storage = multer.diskStorage({
