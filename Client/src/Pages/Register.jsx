@@ -1,20 +1,39 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import FrontentHeader from "../Components/FrontentHeader";
 
 const Register = () => {
-    
 
-  const [FullName, setFullName] = useState();
-  const [Email, setEmail] = useState();
-  const [Password, setPassword] = useState();
-  const [Phone, setPhone] = useState();
+  const [FullName, setFullName] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
 
-  const handleSubmit = () =>{
-    console.log(FullName, Email, Password, Phone)
-  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const FormData = {
+      FullName,
+      Email,
+      Password,
+    };
+  
+    try {
+      const result = await axios.post("http://localhost:4000/api/register/", FormData);
+      console.log(result);
+    } catch (error) {
+      console.error('An error occurred:', error.message); // Log the error message
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+      }
+    }
+  };
+  
 
   return (
     <>
+      <FrontentHeader/>
+
       <div className="loginsection">
         <div className="container">
           <div
@@ -40,6 +59,7 @@ const Register = () => {
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Full Name"
                     className="form-control"
+                    required
                   />
                 </div>
 
@@ -48,7 +68,7 @@ const Register = () => {
                     Email Address
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     value={Email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
@@ -57,18 +77,6 @@ const Register = () => {
                   />
                 </div>
 
-                <div className="form-outline mb-3">
-                  <label className="form-label" htmlFor="form2Example1">
-                    Phone
-                  </label>
-                  <input
-                    type="text"
-                    value={Phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Phone"
-                    className="form-control"
-                  />
-                </div>
 
                 <div className="form-outline mb-4">
                   <label className="form-label" htmlFor="form2Example2">
@@ -80,11 +88,12 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                     className="form-control"
+                    required
                   />
                 </div>
                 <div className="d-flex gap-2">
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-lg btn-dark px-5  rounded-pill"
                   >
                     Register
@@ -95,7 +104,7 @@ const Register = () => {
                       type="submit"
                       className="btn btn-lg btn-info px-5 rounded-pill"
                     >
-                      Sign in
+                      Go to Login
                     </button>
                   </Link>
                 </div>

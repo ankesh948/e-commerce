@@ -2,12 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import axios from "axios";
-<<<<<<< HEAD
-import { useRef } from "react";
-=======
 import { render } from "react-dom";
 import { Wrapper } from "../context";
->>>>>>> becfcb1c2dfb8022fdbba942d8dbdf33ecf731d0
 
 const ManageCategory = () => {
 
@@ -16,13 +12,10 @@ const ManageCategory = () => {
     const [categoryName, setCategoryName] = useState("");
     const [categorySlug, setCategorySlug] = useState("");
 
-<<<<<<< HEAD
     const handleCategoryNameFocus = () => {
       setCategorySlug(categoryName.toLowerCase());
     };
 
-=======
->>>>>>> becfcb1c2dfb8022fdbba942d8dbdf33ecf731d0
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData ={
@@ -38,10 +31,6 @@ const ManageCategory = () => {
             console.error('api not working',err);
           });
     };
-<<<<<<< HEAD
-  
-=======
->>>>>>> becfcb1c2dfb8022fdbba942d8dbdf33ecf731d0
 
     async function handleDelete(id) {
       try {

@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 const loginRoute = require('./Routes/Login');
 const productRoute = require('./Routes/Product');
 const categoryRoute = require('./Routes/Category');
+const registerRoute = require('./Routes/Register');
+const protectedRoute = require('./Routes/Protection');
 
 require('./config');
 
@@ -17,8 +19,10 @@ app.use(express.json());
 const port = process.env.PORT || 4000;
 
 app.use("/api/login", loginRoute);
+app.use("/api/register", registerRoute);
 app.use("/api/products", productRoute);
 app.use("/api/category", categoryRoute);
+app.use("/api/protected", protectedRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
