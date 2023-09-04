@@ -3,8 +3,24 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import {useNavigate } from "react-router-dom";
 import FrontentHeader from "../Components/FrontentHeader";
+import jwtDecode from 'jwt-decode';
+
 
 const Login = () => {
+ 
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (!(decodedToken.exp < currentTime)) {
+        return navigate('/dashboard');
+      }
+    }
+  }, []);
+
+
+
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -21,12 +37,11 @@ const Login = () => {
       },
     })
     .then((res) => {
-      console.log(res.data)
       const token = res.data.token;
       localStorage.setItem('token', token);
       setEmail('')
       setPassword('')
-      // navigate('/dashboard');
+      navigate('/dashboard');
     })
     .catch((err) => {
       console.error(err.response.data);

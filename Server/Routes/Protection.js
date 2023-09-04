@@ -10,16 +10,16 @@ function authenticate(req, res, next) {
   const token = req.header('x-auth-token');
   if (!token) return res.status(401).json({ message: 'Access denied. No token provided.' });
   try {
-    const decoded = jwt.verify(token, secretKey);
-    req.user = decoded;
-    next();
+      const decoded = jwt.verify(token, secretKey);
+      req.user = decoded;
+      next();
   } catch (ex) {
-    res.status(401).json({ message: 'Invalid token.' });
+    next(ex);
   }
 }
 
 protectedRoute.get('/', authenticate, (req, res) => {
-    res.status(200).json({ message: 'This is a protected route.' });
+    console.log(req.user)
 });
 
 module.exports = protectedRoute

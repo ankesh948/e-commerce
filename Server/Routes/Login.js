@@ -20,7 +20,7 @@ route.post('/', middleware, async (req, res) => {
     const isPasswordValid = await bcrypt.compare(Password, user.Password);
 
     if (isPasswordValid) {
-      const token = jwt.sign({ Email: user.Email }, secretKey, { expiresIn: '1m' });  
+      const token = jwt.sign({Email: user.Email, FullName: user.FullName }, secretKey, { expiresIn: '15m' });  
       res.status(200).json({ user, token });
     } else {
       return res.status(401).json({ error: 'Invalid Password' });

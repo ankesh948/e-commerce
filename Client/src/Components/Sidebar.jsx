@@ -8,6 +8,18 @@ const Sidebar = () => {
 const navigate = useNavigate();
 
   const [token, setToken] = useState(localStorage.getItem('token') || null);
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decodedToken.exp < currentTime || null) {
+        return navigate('/login');
+      }
+    }else{
+      return navigate('/login');
+    }
+  }, []);
+  
 
   const logOutHandler = () =>{
     if(localStorage.getItem('token')){
@@ -18,18 +30,6 @@ const navigate = useNavigate();
       }, 150)
     }
   }
-
-    useEffect(() => {
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        const currentTime = Date.now() / 1000;
-        if (decodedToken.exp < currentTime || null) {
-          navigate('/login');
-        }
-      }else{
-        navigate('/login');
-      }
-    }, [token]);
 
   return (
     <>

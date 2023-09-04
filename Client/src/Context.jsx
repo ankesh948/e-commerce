@@ -6,26 +6,6 @@ export const Wrapper = createContext();
 
 const Context = ({ children }) => {
   const [fetchingCategoryData, setCategoryData] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [isLoggedIn, setLoggedIn] = useState('');
-
-  console.log(isLoggedIn)
-  
-
-  useEffect(() => {
-    handleProtectedRequest();
-  }, []);
-
-  const handleProtectedRequest = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/api/protected", {
-        headers: {'x-auth-token': token},
-      });
-      setLoggedIn(response);
-    } catch (error) {
-      setLoggedIn(error) ;
-    }
-  };
 
   useEffect(() => {
     const fetchCategoryData = async () => { // Renamed 'CategoryData' to 'fetchCategoryData'

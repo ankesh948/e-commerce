@@ -2,13 +2,14 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import FrontentHeader from "../Components/FrontentHeader";
+import {useNavigate } from "react-router-dom";
 
 const Register = () => {
 
   const [FullName, setFullName] = useState('');
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +22,10 @@ const Register = () => {
     try {
       const result = await axios.post("http://localhost:4000/api/register/", FormData);
       console.log(result);
+      setFullName('')
+      setEmail('')
+      setPassword('')
+      navigate('/login');
     } catch (error) {
       console.error('An error occurred:', error.message); // Log the error message
       if (error.response) {
