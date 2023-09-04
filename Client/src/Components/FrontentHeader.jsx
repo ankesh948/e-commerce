@@ -1,21 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'boxicons';
 import jwtDecode from 'jwt-decode';
+import { Wrapper } from "../Context";
+import axios from 'axios';
 
-const FrontentHeader = ({ cartData }) => {
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
-  const [isCheckExpiry, setIsCheckExpiry] = useState(false); // Provide initial value
-  const [UserName, setUserName] = useState(''); // Provide initial value
+const FrontentHeader = () => {
+  const { userData } = useContext(Wrapper);
+  const [ cartData, setCartData ] = useState([]);
 
   useEffect(() => {
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      setUserName(decodedToken.FullName);
-      const currentTime = Date.now() / 1000;
-      setIsCheckExpiry(!(decodedToken.exp < currentTime));
-    }
-  }, [token]); // Include token in the dependency array
+    const getCartData = async () => {
+      try {
+        if (userData.Email) {
+          const response = await axios.get(`http://localhost:4000/api/cart/${userData.Email}`);
+          console.log(response.data); 
+          return setCartData(response.data);
+        } else {
+          console.warn('userData.Email is missing or undefined.');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getCartData();
+  }, [userData]); 
+
 
   return (
     <>
@@ -76,10 +86,10 @@ const FrontentHeader = ({ cartData }) => {
             <div className="d-flex align-items-center justify-content-center gap-2">
               <div className="carticon me-3">
                 <box-icon size="md" color="#444" name="cart-add"></box-icon>
-                <span className="count">{cartData}</span>
+                <span className="count">{cartData.length > 0 ? cartData.length : '0'}</span>
               </div>
-              {isCheckExpiry ? (
-                <Link to={'/dashboard'} className='text-decoration-none text-dark fw-bold'><span>{UserName}</span></Link>
+              {userData.Expiry ? (
+                <Link to={'/dashboard'} className='text-decoration-none text-dark fw-bold'><span>{userData.FullName}</span></Link>
               ) : (
                 <>
                   <Link to="/login">

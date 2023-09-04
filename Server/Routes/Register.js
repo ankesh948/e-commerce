@@ -1,7 +1,5 @@
 const express = require('express')
 const registerRoute = express.Router();
-const multer = require('multer')
-const path = require('path')
 const { MongoClient, ObjectId } = require("mongodb");
 const bcrypt = require('bcrypt');
 const client = require("../config.js")
