@@ -8,7 +8,6 @@ const Edit_Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-
   const [singleId, setSingleId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -18,7 +17,6 @@ const Edit_Product = () => {
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
-
 
 
   useEffect(() => {

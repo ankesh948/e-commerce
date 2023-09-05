@@ -8,6 +8,7 @@ import HomePage from './Pages/HomePage'
 import Edit_Product from './Pages/Edit_Product'
 import ManageCategory from './Pages/ManageCategory'
 import Register from './Pages/Register'
+import Product_Detail from './Pages/Product_Detail'
 
 const AppRouter = () => {
 
@@ -20,6 +21,7 @@ const AppRouter = () => {
                 <Route path='/register' element={<Register />} />
                 <Route path='/add-product' element={<Add_Product />} />
                 <Route path='/product-list' element={<Product_List />} />
+                <Route path='/product-detail/:id' element={<Product_Detail />} />
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/edit-product/:id' element={<Edit_Product />} />
                 <Route path='/manage-categories' element={<ManageCategory />} />

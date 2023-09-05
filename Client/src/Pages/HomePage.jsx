@@ -46,7 +46,7 @@ const HomePage = () => {
 
   return (
     <>
-      <FrontentHeader/>
+      <FrontentHeader />
 
       <div className="banner">
         <div className="container">
@@ -65,12 +65,11 @@ const HomePage = () => {
             {fetchProductData.map((e) => (
               <div key={e._id} className="cproducts">
                 <img src={e.thumbnail} className="img-fluid" alt="" />
-
-                <div className='brandbx'>
-                    {e.brand}
-                </div>
+                <div className="brandbx">{e.brand}</div>
                 <div className="innercproducts">
-                  <h5>{e.title}</h5>
+                  <Link to={`/product-detail/${e._id}`}>
+                    <h5>{e.title}</h5>
+                  </Link>
                   <p className="oneline">{e.description}</p>
                   <div className="d-flex align-items-center justify-content-between">
                     <h5>
@@ -82,10 +81,23 @@ const HomePage = () => {
                         ({e.discountPercentage}% OFF)
                       </span>
                     </h5>
-                    <p className='fw-bold'>{e.stock >= 2 ? 'Instock' : "out of stock"}</p>
+                    <p className="fw-bold">
+                      {e.stock >= 2 ? "Instock" : "out of stock"}
+                    </p>
                   </div>
 
-                  <button className='btn btn-md btn-dark d-flex gap-2' onClick={()=>handleAddToCart(e._id)}> <box-icon name='cart-alt'size="cssSize" color='#ffffff' ></box-icon> Add to Cart</button>
+                  <button
+                    className="btn btn-md btn-dark d-flex gap-2"
+                    onClick={() => handleAddToCart(e._id)}
+                  >
+                    {" "}
+                    <box-icon
+                      name="cart-alt"
+                      size="cssSize"
+                      color="#ffffff"
+                    ></box-icon>{" "}
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             ))}
@@ -94,6 +106,6 @@ const HomePage = () => {
       </div>
     </>
   );
-}
+};
 
-export default HomePage
+export default HomePage;

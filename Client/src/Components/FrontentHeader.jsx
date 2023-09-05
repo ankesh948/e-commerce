@@ -26,7 +26,6 @@ const FrontentHeader = () => {
     getCartData();
   }, [userData]); 
 
-
   return (
     <>
       <nav id="header-custom" className="navbar bg-body-tertiary navbar-expand-lg">
