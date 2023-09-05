@@ -1,14 +1,34 @@
-import React from "react";
-import FrontentHeader from "../Components/FrontentHeader";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
-import Product_Detail from "./Product_Detail";
-import { Link } from "react-router-dom";
+import React, { useContext } from 'react'
+import FrontentHeader from '../Components/FrontentHeader';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { Wrapper } from "../Context";
+import {useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+
+  const navigate = useNavigate();
   const [fetchProductData, setFetchProductData] = useState([]);
-  const [cart, setCart] = useState([]);
+  const {userData} = useContext(Wrapper);
+
+  const handleAddToCart = async (id) => {
+    if(userData.Expiry){
+      const CartDetail = {
+        "Product_Id": id,
+        "Email": userData.Email,
+      }
+      try {
+        const response = await axios.post("http://localhost:4000/api/cart", CartDetail);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }else{
+      navigate('/login');
+    }
+  };
+
 
   useEffect(() => {
     fetchData();
@@ -24,26 +44,21 @@ const HomePage = () => {
     }
   }
 
-  const handleAddToCart = (id) => {
-    const selectedProduct = fetchProductData.find(
-      (product) => product._id == id
-    );
-    if (selectedProduct) {
-      setCart([...cart, selectedProduct]);
-    }
-  };
-
   return (
     <>
       <FrontentHeader />
 
       <div className="banner">
         <div className="container">
-          {/* <img
+          <div className="row">
+            <div className="col-12">
+            <img
             src="../src/assets/Img/slider.png"
             className="img-fluid"
             alt=""
-          /> */}
+          /> 
+            </div>
+          </div>
 
           <h1 className="mt-5 text-center">Recent Products</h1>
           <div className="mt-4 d-flex flex-wrap gap-4">

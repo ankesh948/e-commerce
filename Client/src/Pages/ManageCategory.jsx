@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 import axios from "axios";
 import { render } from "react-dom";
-import { Wrapper } from "../context";
+import { Wrapper } from "../Context";
 
 const ManageCategory = () => {
 
@@ -11,6 +11,10 @@ const ManageCategory = () => {
 
     const [categoryName, setCategoryName] = useState("");
     const [categorySlug, setCategorySlug] = useState("");
+
+    const handleCategoryNameFocus = () => {
+      setCategorySlug(categoryName.toLowerCase());
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -80,9 +84,12 @@ const ManageCategory = () => {
                     </label>
                     <input
                       type="text"
+                      id="slug"
                       className="form-control mb-2"
                       placeholder="Category Slug"
+                      value={categorySlug}
                       onChange={(e) => setCategorySlug(e.target.value)}
+                      onFocus={handleCategoryNameFocus}
                       required
                     />
                   </div>

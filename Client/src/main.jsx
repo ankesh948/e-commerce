@@ -6,12 +6,12 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import 'boxicons/dist/boxicons.js';
 import './assets/Css/App.scss'
 import './assets/Js/Script.js'
-import Context from './context.jsx';
+import Context from './Context.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Context>
       <App />
     </Context>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )

@@ -34,27 +34,6 @@ productRoute.post("/", upload.single('thumbnail'), async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Getting Data Added by Ankesh
 productRoute.get("/", async (req, res) => {
 try {

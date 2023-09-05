@@ -1,25 +1,39 @@
 const express = require('express')
-const crypto = require('crypto');
 const jwt = require('jsonwebtoken'); 
 const client = require("../config.js")
 const route = express.Router();
 const middleware = require("../middleWare.js")
+const bcrypt = require('bcrypt');
+
 
 const secretKey = "mysecretKey";
 route.post('/', middleware, async (req, res) => {
+   const {Email, Password} = req.body;
   try {
     const UsersCollection = client.db("Ecommerce").collection("Users");
-    const user = await UsersCollection.findOne(req.body);
-    if (user) {
-      const token = jwt.sign({ Email: user.Email }, secretKey, { expiresIn: '1d' });
-      res.json({user, token});
+    const user = await UsersCollection.findOne({"Email": Email});
+
+    if (!user) {
+     return res.status(401).json({ error: 'Email not found' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(Password, user.Password);
+
+    if (isPasswordValid) {
+      const token = jwt.sign({Email: user.Email, FullName: user.FullName }, secretKey, { expiresIn: '15m' });  
+      res.status(200).json({ user, token });
     } else {
-      res.json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid Password' });
     }
   } catch (error) {
     res.json({ error: 'An error occurred' });
   }
 
 });
+
+
+
+
+
 
 module.exports = route

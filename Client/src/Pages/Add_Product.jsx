@@ -2,7 +2,7 @@ import React, {useState, useRef, useContext } from "react";
 import axios from "axios";
 import Sidebar from "../Components/Sidebar";
 import { Link, useNavigate } from "react-router-dom";
-import { Wrapper } from "../context";
+import { Wrapper } from "../Context.jsx";
 
 
 function App_Product() {
