@@ -4,26 +4,27 @@ import Sidebar from "../Components/Sidebar";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import DataTable from "react-data-table-component";
+
 const Product_List = () => {
+  const [Data, setData] = useState([]);
+  const [fetchProductData, setFetchProductData] = useState([]);
 
-const [Data, setData] = useState([]);
-const [fetchProductData, setFetchProductData] = useState([]);
-
-  function searchHandle(e){
+  function searchHandle(e) {
     const searchData = e.target.value;
     const filterBySearch = Data.filter((item) => {
       return item.title.toLowerCase().includes(searchData.toLowerCase());
     });
     setFetchProductData(filterBySearch);
   }
-  
+
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch("http://localhost:4000/api/products");
         const data = await response.json();
         setData(data);
-        setFetchProductData(data)
+        setFetchProductData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -31,13 +32,16 @@ const [fetchProductData, setFetchProductData] = useState([]);
     fetchData();
   }, []);
 
-
-  async function handleDelete(id) {                               
+  async function handleDelete(id) {
     try {
-      const response = await axios.delete(`http://localhost:4000/api/products/${id}`);
+      const response = await axios.delete(
+        `http://localhost:4000/api/products/${id}`
+      );
       if (response.status === 200) {
-        setFetchProductData((prevData) => prevData.filter(product => product._id !== id));
-        console.log(fetchProductData)
+        setFetchProductData((prevData) =>
+          prevData.filter((product) => product._id !== id)
+        );
+        console.log(fetchProductData);
       } else {
         console.error("Error deleting product:", response.statusText);
       }
@@ -46,6 +50,68 @@ const [fetchProductData, setFetchProductData] = useState([]);
     }
   }
 
+  const columns = [
+    {
+      name: "Images",
+      selector: (row) => {
+        return (
+          <img
+            src={row.thumbnail}
+            className="img-fluid"
+            style={{ width: "50px", padding: "5px 0" }}
+          />
+        );
+      },
+    },
+    {
+      name: "Title",
+      selector: (row) => row.title,
+      sortable: true,
+    },
+    {
+      name: "Price",
+      selector: (row) => row.price,
+      sortable: true,
+    },
+    {
+      name: "Discouted",
+      selector: (row) => row.discountPercentage,
+      sortable: true,
+    },
+    {
+      name: "Stock",
+      selector: (row) => row.stock,
+      sortable: true,
+    },
+    {
+      name: "Brand",
+      selector: (row) => row.brand,
+      sortable: true,
+    },
+    {
+      name: "Categories",
+      selector: (row) => row.category,
+      sortable: true,
+    },
+    {
+      name: "Action",
+      selector: (row) => {
+        return (
+          <div className="d-flex gap-2">
+            <Link to={`/edit-product/${row._id}`}>
+              <button className="btn py-0">
+                <box-icon name="edit-alt" color="black"></box-icon>
+              </button>
+            </Link>
+
+            <button className="btn py-0" onClick={() => handleDelete(row._id)}>
+              <box-icon name="trash" color="red"></box-icon>
+            </button>
+          </div>
+        );
+      },
+    },
+  ];
 
   return (
     <>
@@ -74,82 +140,7 @@ const [fetchProductData, setFetchProductData] = useState([]);
               />
             </div>
 
-            <table className="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Images</th>
-                  <th>Products Title</th>
-                  <th>Price</th>
-                  <th>Discouted</th>
-                  <th>Stock</th>
-                  <th>Brand</th>
-                  <th>Categories</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {fetchProductData.length > 0 ?
-                (fetchProductData.map((e) => (
-                    <tr key={e._id}>
-                      <td>
-                        <img
-                          src={e.thumbnail}
-                          style={{ width: "40px", height: "40px" }}
-                          className="img-thumbnail"
-                          alt="image"
-                        />
-                      </td>
-                      <td>{e.title}</td>
-                      <td>
-                        <div className="d-flex">
-                          <box-icon name="rupee"></box-icon> <b>{e.price}</b>
-                        </div>
-                      </td>
-                      <td>{e.discountPercentage}%</td>
-                      <td>{e.stock}</td>
-                      <td>{e.brand}</td>
-                      <td>{e.category}</td>
-                      <td style={{ width: "120px" }}>
-                        <div className="d-flex gap-2">
-                          <Link to={`/edit-product/${e._id}`}>
-                            <button className="btn py-0">
-                              <box-icon
-                                name="edit-alt"
-                                color="black"
-                              ></box-icon>
-                            </button>
-                          </Link>
-
-                          <button
-                            className="btn py-0"
-                            onClick={() => handleDelete(e._id)}
-                          >
-                            <box-icon name="trash" color="red"></box-icon>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan="8"
-                      style={{ padding: "150px", fontSize: "40px" }}
-                      align="center"
-                    >
-                      Data Not Found
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-
-            <div className="pagination">
-              <button onClick={()=>setPagination(pagination+1)}>Previous</button>
-              <button>Next</button>
-            </div>
-
+            <DataTable columns={columns} data={fetchProductData} pagination striped highlightOnHover  />
           </div>
         </div>
       </div>
