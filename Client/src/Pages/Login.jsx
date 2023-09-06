@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {useNavigate } from "react-router-dom";
 import FrontentHeader from "../Components/FrontentHeader";
 import jwtDecode from 'jwt-decode';
+import AlertStrip from "../Components/AlertStrip";
 
 
 const Login = () => {
@@ -103,6 +104,9 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      <AlertStrip />
+
     </>
   );
 };
