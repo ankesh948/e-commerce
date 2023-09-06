@@ -9,6 +9,7 @@ const navigate = useNavigate();
 
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   useEffect(() => {
+    
     if (token) {
       const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000;
